@@ -66,34 +66,44 @@ async function submitForm() {
 <template>
   <main>
     <!-- HERO -->
-    <section id="inicio" class="bg-clay relative overflow-hidden">
-      <div class="max-w-content mx-auto px-5 sm:px-8 py-16 sm:py-24 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 class="font-serif text-5xl sm:text-6xl leading-[1.05] text-ink">
-            José Cecilio<br />del Valle
-          </h1>
-          <p class="text-goldLight tracking-[0.15em] text-sm mt-3 mb-6">EL SABIO VALLE</p>
-          <p class="italic text-ink/80 max-w-md border-l-2 border-gold/60 pl-4">
-            "Formar la patria es formar al ciudadano; la razón, la virtud y el trabajo
-            son sus más firmes cimientos."
-          </p>
-          <a
-            href="#biografia"
-            class="inline-block mt-8 bg-forest text-parchment px-6 py-3 rounded-sm hover:bg-forest2 transition-colors"
-          >
-            Conoce su historia
-          </a>
-        </div>
+    <section
+      id="inicio"
+      class="relative overflow-hidden"
+      style="background-image: url('/slider.png'); background-size: cover; background-position: center top; min-height: 88vh;"
+    >
+      <!-- Overlay más fuerte en móvil para legibilidad, más sutil en desktop -->
+      <div class="absolute inset-0 pointer-events-none bg-parchment/60 sm:bg-parchment/30"></div>
 
-        <div class="flex justify-center md:justify-end">
-          <NuxtImg
-            src="/jose-cecilio-del-valle.png"
-            alt="Retrato de José Cecilio del Valle"
-            class="w-64 sm:w-80 drop-shadow-2xl"
-            width="480"
-            height="720"
-            loading="eager"
-          />
+      <!-- Degradado inferior suave para transición con la sección siguiente -->
+      <div class="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+           style="background: linear-gradient(to bottom, transparent, #F1E4D0);"></div>
+
+      <div class="relative z-10 flex items-center" style="min-height: 88vh;">
+        <div class="max-w-content mx-auto px-5 sm:px-10 py-20 sm:py-32 w-full">
+          <!-- En móvil: centrado. En desktop: alineado a la izquierda, máx. 55% de ancho -->
+          <div class="text-center sm:text-left sm:max-w-xl">
+            <h1 class="font-serif text-5xl sm:text-7xl leading-[1.0] text-ink drop-shadow-sm">
+              José<br />Cecilio<br />del Valle
+            </h1>
+            <div class="flex items-center gap-3 mt-4 mb-6 justify-center sm:justify-start">
+              <span class="h-px w-8 bg-gold"></span>
+              <p class="text-goldLight font-serif italic text-lg tracking-wide">El Sabio Valle</p>
+              <span class="h-px w-8 bg-gold"></span>
+            </div>
+            <p class="italic text-ink/80 border-l-2 border-gold/70 pl-4 text-sm leading-relaxed max-w-sm mx-auto sm:mx-0">
+              "Formar la patria es formar al ciudadano; la razón, la virtud y el trabajo
+              son sus más firmes cimientos."
+            </p>
+            <div class="flex justify-center sm:justify-start">
+              <a
+                href="#biografia"
+                class="inline-flex items-center gap-2 mt-8 bg-forest text-parchment px-7 py-3 rounded-sm hover:bg-forest2 transition-colors font-medium tracking-wide text-sm"
+              >
+                CONOCE SU HISTORIA
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -173,7 +183,7 @@ async function submitForm() {
         <div class="bg-forest text-parchment rounded-sm border border-gold/40 px-6 sm:px-10 py-8 flex flex-col sm:flex-row items-center gap-6 justify-between">
           <div class="flex items-center gap-5">
             <NuxtImg
-              src="/jose-cecilio-del-valle.png"
+              src="/perfi.png"
               alt=""
               class="w-16 h-16 rounded-full object-cover border-2 border-goldLight"
               width="64"
