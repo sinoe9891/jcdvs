@@ -115,12 +115,12 @@ async function submitForm() {
     <!-- BIOGRAFÍA -->
     <section id="biografia" class="bg-parchment py-20">
       <div class="max-w-content mx-auto px-5 sm:px-8 text-center">
-        <p class="section-label">BIOGRAFÍA</p>
-        <h2 class="text-3xl sm:text-4xl mt-1">Una vida dedicada al bien común</h2>
+        <p class="section-label" v-reveal>BIOGRAFÍA</p>
+        <h2 class="text-3xl sm:text-4xl mt-1" v-reveal="100">Una vida dedicada al bien común</h2>
         <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 mt-12 text-left">
-          <div v-for="item in timeline" :key="item.year">
+          <div v-for="(item, i) in timeline" :key="item.year" v-reveal="i * 120" class="transition-transform duration-300 hover:-translate-y-1 hover:drop-shadow-md cursor-default">
             <NuxtImg :src="item.img" alt="" class="mb-4 h-18 object-contain mx-auto" width="72" height="72" />
             <p class="font-serif text-xl text-ink mb-1">{{ item.year }}</p>
             <p class="text-muted text-sm">{{ item.text }}</p>
@@ -132,15 +132,15 @@ async function submitForm() {
     <!-- PENSAMIENTO -->
     <section id="pensamiento" class="bg-forest text-parchment py-20">
       <div class="max-w-content mx-auto px-5 sm:px-8 text-center">
-        <p class="text-goldLight text-sm tracking-wide">PENSAMIENTO</p>
-        <h2 class="text-3xl sm:text-4xl mt-1">Las ideas que transformaron una nación</h2>
+        <p class="text-goldLight text-sm tracking-wide" v-reveal>PENSAMIENTO</p>
+        <h2 class="text-3xl sm:text-4xl mt-1" v-reveal="100">Las ideas que transformaron una nación</h2>
         <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 text-left">
           <div
-            v-for="idea in ideas"
+            v-for="(idea, i) in ideas" v-reveal="i * 120"
             :key="idea.title"
-            class="bg-parchment text-ink p-6 text-center flex flex-col items-center"
+            class="bg-parchment text-ink p-6 text-center flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_32px_rgba(201,162,39,0.25)] cursor-default"
             style="border: 2px solid rgb(201, 162, 39); border-radius: 10px;"
           >
             <NuxtImg :src="idea.img" alt="" class="h-24 object-contain mb-4 mx-auto" width="96" height="96" />
@@ -158,13 +158,13 @@ async function submitForm() {
     <section id="legado" class="py-20">
       <div class="max-w-content mx-auto px-5 sm:px-8">
         <div class="text-center mb-12">
-          <p class="section-label">LEGADO</p>
-          <h2 class="text-3xl sm:text-4xl mt-1">Su huella permanece en la historia</h2>
+          <p class="section-label" v-reveal>LEGADO</p>
+          <h2 class="text-3xl sm:text-4xl mt-1" v-reveal="100">Su huella permanece en la historia</h2>
           <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
         </div>
 
         <div class="grid sm:grid-cols-2 gap-10 items-start">
-          <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+          <div v-reveal class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
             <NuxtImg src="/independencia.png" alt="Acta de Independencia" class="w-full object-contain flex-shrink-0" style="max-width:9rem; align-self:flex-start;" />
             <div>
               <h3 class="font-serif text-xl mb-2">Redactor del Acta de Independencia de 1821</h3>
@@ -175,7 +175,7 @@ async function submitForm() {
               </p>
             </div>
           </div>
-          <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+          <div v-reveal="150" class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
             <NuxtImg src="/el-amigo-de-patria.png" alt="El Amigo de la Patria" class="w-full object-contain flex-shrink-0" style="max-width:9rem; align-self:flex-start;" />
             <div>
               <h3 class="font-serif text-xl mb-2">El Amigo de la Patria</h3>
@@ -193,7 +193,7 @@ async function submitForm() {
     <!-- CTA CHATBOT -->
     <section class="pb-4" style="overflow: visible;">
       <div class="max-w-content mx-auto px-5 sm:px-8" style="position: relative;">
-        <div class="text-parchment rounded-sm px-5 sm:px-16 py-10 sm:py-12 flex flex-col sm:flex-row items-center gap-8 sm:gap-10 justify-center text-center sm:text-left" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
+        <div v-reveal class="text-parchment rounded-sm px-5 sm:px-16 py-10 sm:py-12 flex flex-col sm:flex-row items-center gap-8 sm:gap-10 justify-center text-center sm:text-left" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
           <div class="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start" style="position: relative;">
             <img
               :src="'/jose-cecilio-del-valle.png'"
@@ -222,12 +222,12 @@ async function submitForm() {
     <section id="contacto" class="py-20">
       <div class="max-w-content mx-auto px-5 sm:px-8">
         <div class="text-center mb-10">
-          <p class="section-label">CONTACTO</p>
-          <h2 class="text-3xl sm:text-4xl mt-1">Escríbenos</h2>
+          <p class="section-label" v-reveal>CONTACTO</p>
+          <h2 class="text-3xl sm:text-4xl mt-1" v-reveal="100">Escríbenos</h2>
           <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
         </div>
 
-        <form class="max-w-xl mx-auto grid gap-4" @submit.prevent="submitForm">
+        <form v-reveal="150" class="max-w-xl mx-auto grid gap-4" @submit.prevent="submitForm">
           <!-- honeypot field, hidden from real users -->
           <input v-model="form.honey" type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" />
 

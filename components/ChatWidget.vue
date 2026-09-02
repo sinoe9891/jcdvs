@@ -149,7 +149,7 @@ async function send() {
 <template>
   <div class="fixed bottom-5 right-5 z-[100000] font-sans">
     <!-- Launcher + speech bubble -->
-    <div v-if="!isOpen" class="flex flex-col items-end gap-2">
+    <div v-if="!isOpen" class="flex flex-col items-end gap-2 chat-float">
       <Transition name="bubble">
         <div
           v-if="showBubble"
@@ -259,6 +259,22 @@ async function send() {
 </template>
 
 <style scoped>
+/* ── Floating launcher ─────────────────────────── */
+.chat-float {
+  animation: chatFloat 3s ease-in-out infinite;
+}
+.chat-float:hover {
+  animation: chatFloat 3s ease-in-out infinite, chatWiggle 0.4s ease-in-out;
+}
+@keyframes chatFloat {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-7px); }
+}
+@keyframes chatWiggle {
+  0%,100% { transform: rotate(0deg) translateY(var(--float-y, 0px)); }
+  25%     { transform: rotate(-4deg); }
+  75%     { transform: rotate(4deg); }
+}
 .bubble-enter-active { animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1); }
 .bubble-leave-active { animation: popOut 0.2s ease-in forwards; }
 @keyframes popIn  { from{opacity:0;transform:scale(0.6) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
