@@ -1,12 +1,65 @@
 <script setup lang="ts">
 type ChatMessage = { role: "assistant" | "user"; content: string; time: string };
 
+// ── Constants ──────────────────────────────────────────────────────────────
+const SESSION_KEY = "jcdvs_chat_v1";
+const SESSION_TTL = 24 * 60 * 60 * 1000; // 24 h en ms
+const MAX_MESSAGES_PER_SESSION = 30;
+
+// ── Composables ────────────────────────────────────────────────────────────
 const { isOpen, close, toggle } = useChatWidget();
 
+// ── Helpers ────────────────────────────────────────────────────────────────
+function nowLabel() {
+  return new Date().toLocaleTimeString("es-HN", { hour: "2-digit", minute: "2-digit" });
+}
+
+const WELCOME: ChatMessage = {
+  role: "assistant",
+  content: "¡Hola! Soy El Sabio Valle. Estoy aquí para responder tus preguntas sobre mi vida, mis ideas y mi legado. ¿Qué deseas saber?",
+  time: nowLabel(),
+};
+
+// ── State ──────────────────────────────────────────────────────────────────
+const messages = ref<ChatMessage[]>([WELCOME]);
+const input = ref("");
+const sending = ref(false);
+const errorMsg = ref("");
+const sentCount = ref(0);
+const listEl = ref<HTMLElement | null>(null);
+const typingText = ref("escribiendo .");
 const showBubble = ref(false);
+
+let typingInterval: ReturnType<typeof setInterval> | null = null;
 let bubbleTimeout: ReturnType<typeof setTimeout> | null = null;
 
+// ── Session persistence ────────────────────────────────────────────────────
+watch(
+  messages,
+  (val) => {
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ messages: val, savedAt: Date.now() }));
+    } catch {}
+  },
+  { deep: true }
+);
+
+// ── Lifecycle ──────────────────────────────────────────────────────────────
 onMounted(() => {
+  // Restore session from localStorage (24 h TTL)
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (raw) {
+      const session = JSON.parse(raw) as { messages: ChatMessage[]; savedAt: number };
+      if (Date.now() - session.savedAt < SESSION_TTL && session.messages?.length) {
+        messages.value = session.messages;
+      } else {
+        localStorage.removeItem(SESSION_KEY);
+      }
+    }
+  } catch {}
+
+  // Show speech bubble after 1.5 s
   bubbleTimeout = setTimeout(() => {
     if (!isOpen.value) showBubble.value = true;
   }, 1500);
@@ -14,30 +67,10 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (bubbleTimeout) clearTimeout(bubbleTimeout);
+  stopTypingAnimation();
 });
 
-function openFromBubble() {
-  showBubble.value = false;
-  toggle();
-}
-
-const messages = ref<ChatMessage[]>([
-  {
-    role: "assistant",
-    content:
-      "¡Hola! Soy El Sabio Valle. Estoy aquí para responder tus preguntas sobre mi vida, mis ideas y mi legado. ¿Qué deseas saber?",
-    time: nowLabel(),
-  },
-]);
-
-const input = ref("");
-const sending = ref(false);
-const errorMsg = ref("");
-const listEl = ref<HTMLElement | null>(null);
-const typingText = ref("escribiendo .");
-
-let typingInterval: ReturnType<typeof setInterval> | null = null;
-
+// ── Typing animation ───────────────────────────────────────────────────────
 function startTypingAnimation() {
   const states = ["escribiendo .", "escribiendo ..", "escribiendo ..."];
   let i = 0;
@@ -52,26 +85,24 @@ function stopTypingAnimation() {
   if (typingInterval) { clearInterval(typingInterval); typingInterval = null; }
 }
 
-// ~40ms per character, min 1 s, max 4 s
+// ~40 ms/char, min 1 s, max 4 s
 function typingDelay(text: string) {
   return Math.min(Math.max(text.length * 40, 1000), 4000);
 }
 
-// Soft client-side guardrail against runaway usage — the real limit
-// lives server-side in /server/api/chat.post.ts, this just gives fast
-// feedback without a round trip.
-const MAX_MESSAGES_PER_SESSION = 30;
-const sentCount = ref(0);
-
-function nowLabel() {
-  return new Date().toLocaleTimeString("es-HN", { hour: "2-digit", minute: "2-digit" });
-}
-
+// ── Scroll ─────────────────────────────────────────────────────────────────
 async function scrollToBottom() {
   await nextTick();
   listEl.value?.scrollTo({ top: listEl.value.scrollHeight, behavior: "smooth" });
 }
 
+// ── Bubble ─────────────────────────────────────────────────────────────────
+function openFromBubble() {
+  showBubble.value = false;
+  toggle();
+}
+
+// ── Send ───────────────────────────────────────────────────────────────────
 async function send() {
   const text = input.value.trim();
   if (!text || sending.value) return;
@@ -103,10 +134,9 @@ async function send() {
     });
     replyText = res.reply;
   } catch (e) {
-    // fallback already set above
+    // fallback already set
   }
 
-  // Wait proportional to reply length so it feels like Valle is typing
   await new Promise((resolve) => setTimeout(resolve, typingDelay(replyText)));
 
   stopTypingAnimation();
@@ -117,7 +147,7 @@ async function send() {
 </script>
 
 <template>
-  <div class="fixed bottom-5 right-5 z-50 font-sans">
+  <div class="fixed bottom-5 right-5 z-[100000] font-sans">
     <!-- Launcher + speech bubble -->
     <div v-if="!isOpen" class="flex flex-col items-end gap-2">
       <Transition name="bubble">

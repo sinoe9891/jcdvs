@@ -119,7 +119,7 @@ async function submitForm() {
         <h2 class="text-3xl sm:text-4xl mt-1">Una vida dedicada al bien común</h2>
         <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
 
-        <div class="grid sm:grid-cols-4 gap-8 mt-12 text-left">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 mt-12 text-left">
           <div v-for="item in timeline" :key="item.year">
             <NuxtImg :src="item.img" alt="" class="mb-4 h-18 object-contain mx-auto" width="72" height="72" />
             <p class="font-serif text-xl text-ink mb-1">{{ item.year }}</p>
@@ -164,8 +164,8 @@ async function submitForm() {
         </div>
 
         <div class="grid sm:grid-cols-2 gap-10 items-start">
-          <div class="flex gap-6 items-start">
-            <NuxtImg src="/independencia.png" alt="Acta de Independencia" class="max-w-xs w-full object-contain flex-shrink-0" style="max-width:12rem;" />
+          <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+            <NuxtImg src="/independencia.png" alt="Acta de Independencia" class="w-full object-contain flex-shrink-0" style="max-width:9rem; align-self:flex-start;" />
             <div>
               <h3 class="font-serif text-xl mb-2">Redactor del Acta de Independencia de 1821</h3>
               <p class="text-muted text-sm">
@@ -175,8 +175,8 @@ async function submitForm() {
               </p>
             </div>
           </div>
-          <div class="flex gap-6 items-start">
-            <NuxtImg src="/el-amigo-de-patria.png" alt="El Amigo de la Patria" class="max-w-xs w-full object-contain flex-shrink-0" style="max-width:12rem;" />
+          <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+            <NuxtImg src="/el-amigo-de-patria.png" alt="El Amigo de la Patria" class="w-full object-contain flex-shrink-0" style="max-width:9rem; align-self:flex-start;" />
             <div>
               <h3 class="font-serif text-xl mb-2">El Amigo de la Patria</h3>
               <p class="text-muted text-sm">
@@ -193,12 +193,12 @@ async function submitForm() {
     <!-- CTA CHATBOT -->
     <section class="pb-4" style="overflow: visible;">
       <div class="max-w-content mx-auto px-5 sm:px-8" style="position: relative;">
-        <div class="text-parchment rounded-sm px-8 sm:px-16 py-12 flex flex-col sm:flex-row items-center gap-10 justify-center" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
-          <div class="flex items-center gap-6" style="position: relative;">
+        <div class="text-parchment rounded-sm px-5 sm:px-16 py-10 sm:py-12 flex flex-col sm:flex-row items-center gap-8 sm:gap-10 justify-center text-center sm:text-left" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
+          <div class="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start" style="position: relative;">
             <img
               :src="'/jose-cecilio-del-valle.png'"
               alt=""
-              style="width: 140px; height: auto; margin-top: -60px; margin-bottom: -20px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); display: block; flex-shrink: 0; object-fit: contain;"
+              class="profile-cta" style="width: clamp(90px, 18vw, 140px); height: auto; margin-top: -40px; margin-bottom: -10px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); display: block; flex-shrink: 0; object-fit: contain;"
             />
             <div>
               <h3 class="font-serif text-xl text-goldLight">Conversa con El Sabio Valle</h3>
@@ -288,7 +288,7 @@ async function submitForm() {
           <button
             type="submit"
             :disabled="status === 'sending' || !form.terminos"
-            class="bg-forest text-parchment px-8 py-3 hover:bg-forest2 transition-colors disabled:opacity-60 justify-self-start font-semibold tracking-wide" style="border-radius: 10px; border: 1px solid rgb(201,162,39);"
+            class="bg-forest text-parchment px-8 py-3 hover:bg-forest2 transition-colors disabled:opacity-60 w-full sm:w-auto font-semibold tracking-wide" style="border-radius: 10px; border: 1px solid rgb(201,162,39);"
           >
             {{ status === "sending" ? "Enviando…" : "Enviar mensaje" }}
           </button>
