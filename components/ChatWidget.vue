@@ -3,6 +3,24 @@ type ChatMessage = { role: "assistant" | "user"; content: string; time: string }
 
 const { isOpen, close, toggle } = useChatWidget();
 
+const showBubble = ref(false);
+let bubbleTimeout: ReturnType<typeof setTimeout> | null = null;
+
+onMounted(() => {
+  bubbleTimeout = setTimeout(() => {
+    if (!isOpen.value) showBubble.value = true;
+  }, 1500);
+});
+
+onUnmounted(() => {
+  if (bubbleTimeout) clearTimeout(bubbleTimeout);
+});
+
+function openFromBubble() {
+  showBubble.value = false;
+  toggle();
+}
+
 const messages = ref<ChatMessage[]>([
   {
     role: "assistant",
@@ -16,6 +34,28 @@ const input = ref("");
 const sending = ref(false);
 const errorMsg = ref("");
 const listEl = ref<HTMLElement | null>(null);
+const typingText = ref("escribiendo .");
+
+let typingInterval: ReturnType<typeof setInterval> | null = null;
+
+function startTypingAnimation() {
+  const states = ["escribiendo .", "escribiendo ..", "escribiendo ..."];
+  let i = 0;
+  typingText.value = states[0];
+  typingInterval = setInterval(() => {
+    i = (i + 1) % states.length;
+    typingText.value = states[i];
+  }, 420);
+}
+
+function stopTypingAnimation() {
+  if (typingInterval) { clearInterval(typingInterval); typingInterval = null; }
+}
+
+// ~40ms per character, min 1 s, max 4 s
+function typingDelay(text: string) {
+  return Math.min(Math.max(text.length * 40, 1000), 4000);
+}
 
 // Soft client-side guardrail against runaway usage — the real limit
 // lives server-side in /server/api/chat.post.ts, this just gives fast
@@ -46,7 +86,10 @@ async function send() {
   input.value = "";
   sending.value = true;
   sentCount.value++;
+  startTypingAnimation();
   scrollToBottom();
+
+  let replyText = "Disculpad, en este momento no puedo responder con claridad. Os ruego intentarlo de nuevo en unos instantes.";
 
   try {
     const res = await $fetch<{ reply: string }>("/api/chat", {
@@ -54,42 +97,59 @@ async function send() {
       body: {
         messages: messages.value
           .filter((m) => m.role === "user" || m.role === "assistant")
-          .slice(-12) // keep payload small
+          .slice(-12)
           .map((m) => ({ role: m.role, content: m.content })),
       },
     });
-    messages.value.push({ role: "assistant", content: res.reply, time: nowLabel() });
+    replyText = res.reply;
   } catch (e) {
-    messages.value.push({
-      role: "assistant",
-      content:
-        "Disculpad, en este momento no puedo responder con claridad. Os ruego intentarlo de nuevo en unos instantes.",
-      time: nowLabel(),
-    });
-  } finally {
-    sending.value = false;
-    scrollToBottom();
+    // fallback already set above
   }
+
+  // Wait proportional to reply length so it feels like Valle is typing
+  await new Promise((resolve) => setTimeout(resolve, typingDelay(replyText)));
+
+  stopTypingAnimation();
+  sending.value = false;
+  messages.value.push({ role: "assistant", content: replyText, time: nowLabel() });
+  scrollToBottom();
 }
 </script>
 
 <template>
   <div class="fixed bottom-5 right-5 z-50 font-sans">
-    <!-- Launcher -->
-    <button
-      v-if="!isOpen"
-      class="w-16 h-16 rounded-full bg-forest border-2 border-goldLight shadow-lg overflow-hidden hover:scale-105 transition-transform"
-      aria-label="Abrir chat con El Sabio Valle"
-      @click="toggle"
-    >
-      <NuxtImg
-        src="/perfi.png"
-        alt=""
-        class="w-full h-full object-cover"
-        width="64"
-        height="64"
-      />
-    </button>
+    <!-- Launcher + speech bubble -->
+    <div v-if="!isOpen" class="flex flex-col items-end gap-2">
+      <Transition name="bubble">
+        <div
+          v-if="showBubble"
+          class="relative bg-parchment text-ink text-sm px-4 py-3 shadow-lg border border-gold/40 cursor-pointer select-none"
+          style="border-radius: 18px 18px 4px 18px; max-width: 210px;"
+          @click="openFromBubble"
+        >
+          <p class="font-serif leading-snug">¿Tienes alguna pregunta sobre mí?</p>
+          <button
+            class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gold text-ink text-xs flex items-center justify-center leading-none hover:bg-goldLight"
+            aria-label="Cerrar"
+            @click.stop="showBubble = false"
+          >×</button>
+          <span class="bubble-tail"></span>
+        </div>
+      </Transition>
+      <button
+        class="w-16 h-16 rounded-full bg-forest border-2 border-goldLight shadow-lg overflow-hidden hover:scale-105 transition-transform"
+        aria-label="Abrir chat con El Sabio Valle"
+        @click="toggle"
+      >
+        <NuxtImg
+          src="/perfi.png"
+          alt=""
+          class="w-full h-full object-cover"
+          width="64"
+          height="64"
+        />
+      </button>
+    </div>
 
     <!-- Chat panel -->
     <div
@@ -138,8 +198,8 @@ async function send() {
         </div>
 
         <div v-if="sending" class="flex justify-start">
-          <div class="bg-parchment2 border border-gold/20 rounded-md rounded-bl-none px-3 py-2 text-sm text-muted">
-            escribiendo…
+          <div class="bg-parchment2 border border-gold/20 rounded-md rounded-bl-none px-3 py-2 text-sm text-muted font-mono tracking-wide">
+            {{ typingText }}
           </div>
         </div>
 
@@ -167,3 +227,18 @@ async function send() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.bubble-enter-active { animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+.bubble-leave-active { animation: popOut 0.2s ease-in forwards; }
+@keyframes popIn  { from{opacity:0;transform:scale(0.6) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
+@keyframes popOut { from{opacity:1;transform:scale(1)} to{opacity:0;transform:scale(0.7)} }
+.bubble-tail {
+  position:absolute; bottom:-10px; right:18px;
+  width:0; height:0;
+  border-left:10px solid transparent;
+  border-right:4px solid transparent;
+  border-top:10px solid #f1e4d0;
+  filter: drop-shadow(0 1px 0 rgba(201,162,39,0.25));
+}
+</style>

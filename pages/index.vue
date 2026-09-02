@@ -196,7 +196,7 @@ async function submitForm() {
         <div class="text-parchment rounded-sm px-8 sm:px-16 py-12 flex flex-col sm:flex-row items-center gap-10 justify-center" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
           <div class="flex items-center gap-6" style="position: relative;">
             <img
-              src="/jose-cecilio-del-valle.png"
+              :src="'/jose-cecilio-del-valle.png'"
               alt=""
               style="width: 140px; height: auto; margin-top: -60px; margin-bottom: -20px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); display: block; flex-shrink: 0; object-fit: contain;"
             />

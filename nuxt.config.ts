@@ -27,10 +27,23 @@ export default defineNuxtConfig({
         },
         { property: "og:type", content: "website" },
         { property: "og:image", content: "/jose-cecilio-del-valle.png" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: "José Cecilio del Valle — El Sabio Valle" },
+        { property: "og:locale", content: "es_HN" },
+        { property: "og:site_name", content: "El Sabio Valle" },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: "José Cecilio del Valle | El Sabio Valle" },
+        {
+          name: "twitter:description",
+          content:
+            "La vida, el pensamiento y el legado del redactor del Acta de Independencia de Centroamérica.",
+        },
+        { name: "twitter:image", content: "/jose-cecilio-del-valle.png" },
+        { name: "twitter:image:alt", content: "Retrato de José Cecilio del Valle" },
       ],
       link: [
-        { rel: "icon", type: "image/png", href: "/favicon.png" },
+        { rel: "icon", type: "image/png", href: "/perfi.png" },
         {
           rel: "preconnect",
           href: "https://fonts.googleapis.com",
