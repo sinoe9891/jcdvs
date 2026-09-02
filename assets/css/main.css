@@ -56,3 +56,57 @@ textarea:focus-visible {
   transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* ── Acta de Independencia — firma cards ─────────────────────── */
+.firma-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0.75rem;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: 6px;
+  background: rgba(201, 162, 39, 0.04);
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  cursor: default;
+}
+.firma-card:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.5);
+  transform: translateY(-3px);
+}
+.firma-card.firma-highlight {
+  border-color: rgba(201, 162, 39, 0.6);
+  background: rgba(201, 162, 39, 0.09);
+}
+.firma-seal {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+  filter: sepia(1) saturate(2);
+}
+.firma-card.firma-highlight .firma-seal {
+  opacity: 1;
+  font-size: 1.5rem;
+}
+.firma-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.78rem;
+  color: #f1e4d0;
+  font-style: italic;
+  line-height: 1.3;
+  margin-bottom: 0.3rem;
+}
+.firma-card.firma-highlight .firma-name {
+  color: #c9a227;
+  font-size: 0.82rem;
+}
+.firma-role {
+  font-size: 0.65rem;
+  color: rgba(241, 228, 208, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.firma-card.firma-highlight .firma-role {
+  color: rgba(201, 162, 39, 0.6);
+}

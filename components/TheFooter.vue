@@ -17,11 +17,11 @@ const year = new Date().getFullYear();
       <div>
         <p class="text-goldLight mb-3">Enlaces</p>
         <ul class="space-y-2 text-parchment/70">
-          <li><a href="#inicio" class="hover:text-goldLight">Inicio</a></li>
-          <li><a href="#biografia" class="hover:text-goldLight">Biografía</a></li>
-          <li><a href="#pensamiento" class="hover:text-goldLight">Pensamiento</a></li>
-          <li><a href="#legado" class="hover:text-goldLight">Legado</a></li>
-          <li><a href="#contacto" class="hover:text-goldLight">Contacto</a></li>
+          <li><NuxtLink to="/#inicio" class="hover:text-goldLight">Inicio</NuxtLink></li>
+          <li><NuxtLink to="/#biografia" class="hover:text-goldLight">Biografía</NuxtLink></li>
+          <li><NuxtLink to="/#pensamiento" class="hover:text-goldLight">Pensamiento</NuxtLink></li>
+          <li><NuxtLink to="/#legado" class="hover:text-goldLight">Legado</NuxtLink></li>
+          <li><NuxtLink to="/#contacto" class="hover:text-goldLight">Contacto</NuxtLink></li>
         </ul>
       </div>
 

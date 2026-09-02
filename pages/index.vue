@@ -173,6 +173,11 @@ async function submitForm() {
                 Centroamérica. Su redacción reflejó claridad, visión política y un profundo
                 amor por la patria.
               </p>
+              <a href="/acta" class="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold tracking-[0.12em] uppercase text-gold hover:text-goldLight transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M8 10h8M8 14h5"/></svg>
+                Leer Acta
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
             </div>
           </div>
           <div v-reveal="150" class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
@@ -189,6 +194,7 @@ async function submitForm() {
         </div>
       </div>
     </section>
+
 
     <!-- CTA CHATBOT -->
     <section class="pb-4" style="overflow: visible;">
