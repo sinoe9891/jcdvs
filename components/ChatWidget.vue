@@ -83,7 +83,7 @@ async function send() {
       @click="toggle"
     >
       <NuxtImg
-        src="/jose-cecilio-del-valle.png"
+        src="/perfi.png"
         alt=""
         class="w-full h-full object-cover"
         width="64"
@@ -101,7 +101,7 @@ async function send() {
       <!-- Header -->
       <div class="bg-forest text-parchment px-4 py-3 flex items-center gap-3">
         <NuxtImg
-          src="/jose-cecilio-del-valle.png"
+          src="/perfi.png"
           alt="Retrato de José Cecilio del Valle"
           class="w-10 h-10 rounded-full object-cover border-2 border-goldLight"
           width="40"

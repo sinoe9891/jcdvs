@@ -22,32 +22,36 @@ useHead({
 });
 
 const timeline = [
-  { year: "1780", text: "Nace el 22 de noviembre en Choluteca, en la Capitanía General de Guatemala." },
-  { year: "1802", text: "Estudia en la Universidad de San Carlos, en Guatemala; destaca por su disciplina y amor al conocimiento." },
-  { year: "1821", text: "Redacta el Acta de Independencia de Centroamérica el 15 de septiembre." },
-  { year: "1834", text: "Fallece el 2 de marzo en Guatemala, poco después de ser electo presidente de la Federación Centroamericana." },
+  { year: "1780", text: "Nace el 22 de noviembre en Choluteca, en la Capitanía General de Guatemala.", img: "/elementos-44.png" },
+  { year: "1802", text: "Estudia en la Universidad de San Carlos, en Guatemala; destaca por su disciplina y amor al conocimiento.", img: "/elementos-45.png" },
+  { year: "1821", text: "Redacta el Acta de Independencia de Centroamérica el 15 de septiembre.", img: "/elementos-46.png" },
+  { year: "1834", text: "Fallece el 2 de marzo en Guatemala, poco después de ser electo presidente de la Federación Centroamericana.", img: "/elementos-47.png" },
 ];
 
 const ideas = [
   {
     title: "Economía Política",
     text: "Defendió el trabajo como origen de toda riqueza y estudió a fondo a Adam Smith, David Ricardo y Jeremy Bentham.",
+    img: "/ideas-49.png",
   },
   {
     title: "Libre Comercio",
     text: "Sostuvo que el comercio de bienes básicos debía ser libre, como motor de prosperidad para los pueblos.",
+    img: "/ideas-50.png",
   },
   {
     title: "Educación",
     text: "Creía que la educación forma ciudadanos libres, responsables y capaces de construir repúblicas sólidas.",
+    img: "/ideas-51.png",
   },
   {
     title: "Unidad Centroamericana",
     text: "Visionó una Centroamérica unida y próspera, aprovechando su riqueza natural y el talento de su gente.",
+    img: "/ideas-52.png",
   },
 ];
 
-const form = reactive({ name: "", email: "", message: "", honey: "" });
+const form = reactive({ name: "", email: "", message: "", honey: "", motivo: "", origen: "", terminos: false });
 const status = ref<"idle" | "sending" | "sent" | "error">("idle");
 
 async function submitForm() {
@@ -97,7 +101,7 @@ async function submitForm() {
             <div class="flex justify-center sm:justify-start">
               <a
                 href="#biografia"
-                class="inline-flex items-center gap-2 mt-8 bg-forest text-parchment px-7 py-3 rounded-sm hover:bg-forest2 transition-colors font-medium tracking-wide text-sm"
+                class="inline-flex items-center gap-2 mt-8 bg-forest text-parchment px-7 py-3 hover:bg-forest2 transition-colors font-medium tracking-wide text-sm" style="border-radius: 10px;"
               >
                 CONOCE SU HISTORIA
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -113,13 +117,11 @@ async function submitForm() {
       <div class="max-w-content mx-auto px-5 sm:px-8 text-center">
         <p class="section-label">BIOGRAFÍA</p>
         <h2 class="text-3xl sm:text-4xl mt-1">Una vida dedicada al bien común</h2>
-        <div class="divider" />
+        <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
 
         <div class="grid sm:grid-cols-4 gap-8 mt-12 text-left">
           <div v-for="item in timeline" :key="item.year">
-            <div class="w-12 h-12 rounded-full border border-gold/50 flex items-center justify-center mb-4 text-gold">
-              {{ item.year.slice(2) }}
-            </div>
+            <NuxtImg :src="item.img" alt="" class="mb-4 h-18 object-contain mx-auto" width="72" height="72" />
             <p class="font-serif text-xl text-ink mb-1">{{ item.year }}</p>
             <p class="text-muted text-sm">{{ item.text }}</p>
           </div>
@@ -132,14 +134,16 @@ async function submitForm() {
       <div class="max-w-content mx-auto px-5 sm:px-8 text-center">
         <p class="text-goldLight text-sm tracking-wide">PENSAMIENTO</p>
         <h2 class="text-3xl sm:text-4xl mt-1">Las ideas que transformaron una nación</h2>
-        <div class="divider" />
+        <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 text-left">
           <div
             v-for="idea in ideas"
             :key="idea.title"
-            class="bg-parchment text-ink rounded-sm p-6 border border-gold/20"
+            class="bg-parchment text-ink p-6 text-center flex flex-col items-center"
+            style="border: 2px solid rgb(201, 162, 39); border-radius: 10px;"
           >
+            <NuxtImg :src="idea.img" alt="" class="h-24 object-contain mb-4 mx-auto" width="96" height="96" />
             <h3 class="font-serif text-lg mb-2">{{ idea.title }}</h3>
             <p class="text-sm text-muted">{{ idea.text }}</p>
           </div>
@@ -147,47 +151,54 @@ async function submitForm() {
       </div>
     </section>
 
+    <!-- LEGADO + CTA + CONTACTO: una sola caja con fondo compartido -->
+    <div style="background-image: url('/fondo2.png'); background-size: cover; background-position: center; background-attachment: local; overflow: visible;">
+
     <!-- LEGADO -->
-    <section id="legado" class="bg-parchment py-20">
+    <section id="legado" class="py-20">
       <div class="max-w-content mx-auto px-5 sm:px-8">
         <div class="text-center mb-12">
           <p class="section-label">LEGADO</p>
           <h2 class="text-3xl sm:text-4xl mt-1">Su huella permanece en la historia</h2>
-          <div class="divider" />
+          <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-10">
-          <div>
-            <h3 class="font-serif text-xl mb-2">Redactor del Acta de Independencia de 1821</h3>
-            <p class="text-muted text-sm">
-              El 15 de septiembre de 1821, dio forma con su pluma a la independencia de
-              Centroamérica. Su redacción reflejó claridad, visión política y un profundo
-              amor por la patria.
-            </p>
+        <div class="grid sm:grid-cols-2 gap-10 items-start">
+          <div class="flex gap-6 items-start">
+            <NuxtImg src="/independencia.png" alt="Acta de Independencia" class="max-w-xs w-full object-contain flex-shrink-0" style="max-width:12rem;" />
+            <div>
+              <h3 class="font-serif text-xl mb-2">Redactor del Acta de Independencia de 1821</h3>
+              <p class="text-muted text-sm">
+                El 15 de septiembre de 1821, dio forma con su pluma a la independencia de
+                Centroamérica. Su redacción reflejó claridad, visión política y un profundo
+                amor por la patria.
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 class="font-serif text-xl mb-2">El Amigo de la Patria</h3>
-            <p class="text-muted text-sm">
-              Fundó y dirigió este periódico en 1820, desde donde difundió ideas ilustradas,
-              defendió la libertad de expresión y promovió el progreso moral y material de
-              los pueblos centroamericanos.
-            </p>
+          <div class="flex gap-6 items-start">
+            <NuxtImg src="/el-amigo-de-patria.png" alt="El Amigo de la Patria" class="max-w-xs w-full object-contain flex-shrink-0" style="max-width:12rem;" />
+            <div>
+              <h3 class="font-serif text-xl mb-2">El Amigo de la Patria</h3>
+              <p class="text-muted text-sm">
+                Fundó y dirigió este periódico en 1820, desde donde difundió ideas ilustradas,
+                defendió la libertad de expresión y promovió el progreso moral y material de
+                los pueblos centroamericanos.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- CTA CHATBOT -->
-    <section class="bg-parchment pb-4">
-      <div class="max-w-content mx-auto px-5 sm:px-8">
-        <div class="bg-forest text-parchment rounded-sm border border-gold/40 px-6 sm:px-10 py-8 flex flex-col sm:flex-row items-center gap-6 justify-between">
-          <div class="flex items-center gap-5">
-            <NuxtImg
-              src="/perfi.png"
+    <section class="pb-4" style="overflow: visible;">
+      <div class="max-w-content mx-auto px-5 sm:px-8" style="position: relative;">
+        <div class="text-parchment rounded-sm px-8 sm:px-16 py-12 flex flex-col sm:flex-row items-center gap-10 justify-center" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
+          <div class="flex items-center gap-6" style="position: relative;">
+            <img
+              src="/jose-cecilio-del-valle.png"
               alt=""
-              class="w-16 h-16 rounded-full object-cover border-2 border-goldLight"
-              width="64"
-              height="64"
+              style="width: 140px; height: auto; margin-top: -60px; margin-bottom: -20px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); display: block; flex-shrink: 0; object-fit: contain;"
             />
             <div>
               <h3 class="font-serif text-xl text-goldLight">Conversa con El Sabio Valle</h3>
@@ -198,7 +209,7 @@ async function submitForm() {
             </div>
           </div>
           <button
-            class="bg-gold text-ink px-5 py-3 rounded-sm hover:bg-goldLight transition-colors whitespace-nowrap"
+            class="bg-gold text-ink px-6 py-3 hover:bg-goldLight transition-colors whitespace-nowrap font-semibold tracking-wide" style="border-radius: 10px; border: 1px solid rgb(201,162,39);"
             @click="openChat"
           >
             Iniciar conversación
@@ -208,12 +219,12 @@ async function submitForm() {
     </section>
 
     <!-- CONTACTO -->
-    <section id="contacto" class="bg-parchment py-20">
+    <section id="contacto" class="py-20">
       <div class="max-w-content mx-auto px-5 sm:px-8">
         <div class="text-center mb-10">
           <p class="section-label">CONTACTO</p>
           <h2 class="text-3xl sm:text-4xl mt-1">Escríbenos</h2>
-          <div class="divider" />
+          <NuxtImg src="/divider.png" alt="" class="mx-auto my-4 h-10 object-contain" width="200" height="40" />
         </div>
 
         <form class="max-w-xl mx-auto grid gap-4" @submit.prevent="submitForm">
@@ -225,28 +236,59 @@ async function submitForm() {
               v-model="form.name"
               required
               type="text"
-              placeholder="Nombre completo"
-              class="bg-parchment2 border border-gold/30 rounded-sm px-4 py-3 text-sm focus:outline-none"
+              placeholder="Tu nombre completo"
+              style="border-radius: 10px; border: 1px solid rgb(201,162,39); background: rgba(241,228,208,0.9); padding: 12px 16px; font-size: 0.875rem; outline: none; width: 100%;"
             />
             <input
               v-model="form.email"
               required
               type="email"
               placeholder="Correo electrónico"
-              class="bg-parchment2 border border-gold/30 rounded-sm px-4 py-3 text-sm focus:outline-none"
+              style="border-radius: 10px; border: 1px solid rgb(201,162,39); background: rgba(241,228,208,0.9); padding: 12px 16px; font-size: 0.875rem; outline: none; width: 100%;"
             />
           </div>
+
+          <!-- Motivo de contacto -->
+          <select
+            v-model="form.motivo"
+            style="border-radius: 10px; border: 1px solid rgb(201,162,39); background: rgba(241,228,208,0.9); padding: 12px 16px; font-size: 0.875rem; outline: none; width: 100%; cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%23c9a227%22 d=%22M6 8L1 3h10z%22/></svg>'); background-repeat: no-repeat; background-position: right 14px center;"
+          >
+            <option value="" disabled selected>¿Cuál es el motivo de tu mensaje?</option>
+            <option value="educativo">Proyecto educativo</option>
+            <option value="investigacion">Investigación o tesis</option>
+            <option value="colaboracion">Colaboración con el sitio</option>
+            <option value="prensa">Prensa o medios</option>
+            <option value="otro">Otro</option>
+          </select>
+
+          <!-- ¿Cómo nos conociste? -->
+          <div style="border-radius: 10px; border: 1px solid rgb(201,162,39); background: rgba(241,228,208,0.9); padding: 14px 16px;">
+            <p class="text-xs text-ink/60 mb-3 font-medium tracking-wide">¿Cómo llegaste a nosotros?</p>
+            <div class="flex flex-wrap gap-3">
+              <label v-for="op in ['Redes sociales','Google','Un amigo','Institución educativa','Otro']" :key="op" class="flex items-center gap-2 cursor-pointer text-sm text-ink/80">
+                <input v-model="form.origen" type="radio" :value="op" class="accent-gold" />
+                {{ op }}
+              </label>
+            </div>
+          </div>
+
           <textarea
             v-model="form.message"
             required
             rows="4"
-            placeholder="Mensaje"
-            class="bg-parchment2 border border-gold/30 rounded-sm px-4 py-3 text-sm focus:outline-none"
+            placeholder="Cuéntanos tu mensaje o consulta..."
+            style="border-radius: 10px; border: 1px solid rgb(201,162,39); background: rgba(241,228,208,0.9); padding: 12px 16px; font-size: 0.875rem; outline: none; width: 100%; resize: vertical;"
           />
+          <!-- Términos y condiciones -->
+          <label class="flex items-start gap-3 cursor-pointer text-sm text-ink/70">
+            <input v-model="form.terminos" type="checkbox" class="accent-gold mt-0.5 flex-shrink-0" required />
+            <span>Acepto los <a href="#" class="text-gold hover:underline font-medium">Términos y Condiciones</a> y la <a href="#" class="text-gold hover:underline font-medium">Política de Privacidad</a> de este sitio educativo.</span>
+          </label>
+
           <button
             type="submit"
-            :disabled="status === 'sending'"
-            class="bg-forest text-parchment px-6 py-3 rounded-sm hover:bg-forest2 transition-colors disabled:opacity-60 justify-self-start"
+            :disabled="status === 'sending' || !form.terminos"
+            class="bg-forest text-parchment px-8 py-3 hover:bg-forest2 transition-colors disabled:opacity-60 justify-self-start font-semibold tracking-wide" style="border-radius: 10px; border: 1px solid rgb(201,162,39);"
           >
             {{ status === "sending" ? "Enviando…" : "Enviar mensaje" }}
           </button>
@@ -257,5 +299,6 @@ async function submitForm() {
         </form>
       </div>
     </section>
+    </div>
   </main>
 </template>
