@@ -29,9 +29,11 @@ const sentCount = ref(0);
 const listEl = ref<HTMLElement | null>(null);
 const typingText = ref("escribiendo .");
 const showBubble = ref(false);
+const ctaInView = ref(false);
 
 let typingInterval: ReturnType<typeof setInterval> | null = null;
 let bubbleTimeout: ReturnType<typeof setTimeout> | null = null;
+let ctaObserver: IntersectionObserver | null = null;
 
 // ── Session persistence ────────────────────────────────────────────────────
 watch(
@@ -63,10 +65,23 @@ onMounted(() => {
   bubbleTimeout = setTimeout(() => {
     if (!isOpen.value) showBubble.value = true;
   }, 1500);
+
+  // En móvil, el CTA ya ofrece acceso al chat: ocultamos el botón flotante
+  // mientras esa tarjeta está visible para que no tape su contenido.
+  nextTick(() => {
+    const cta = document.querySelector(".chat-cta");
+    if (!cta) return;
+
+    ctaObserver = new IntersectionObserver(([entry]) => {
+      ctaInView.value = window.matchMedia("(max-width: 639px)").matches && entry.isIntersecting;
+    }, { threshold: 0.15 });
+    ctaObserver.observe(cta);
+  });
 });
 
 onUnmounted(() => {
   if (bubbleTimeout) clearTimeout(bubbleTimeout);
+  ctaObserver?.disconnect();
   stopTypingAnimation();
 });
 
@@ -149,11 +164,11 @@ async function send() {
 <template>
   <div class="fixed bottom-5 right-5 z-[100000] font-sans">
     <!-- Launcher + speech bubble -->
-    <div v-if="!isOpen" class="flex flex-col items-end gap-2 chat-float">
+    <div v-if="!isOpen && !ctaInView" class="flex flex-col items-end gap-2 chat-float">
       <Transition name="bubble">
         <div
           v-if="showBubble"
-          class="relative bg-parchment text-ink text-sm px-4 py-3 shadow-lg border border-gold/40 cursor-pointer select-none"
+          class="chat-bubble relative bg-parchment text-ink text-sm px-4 py-3 shadow-lg border border-gold/40 cursor-pointer select-none"
           style="border-radius: 18px 18px 4px 18px; max-width: 210px;"
           @click="openFromBubble"
         >
@@ -183,7 +198,7 @@ async function send() {
 
     <!-- Chat panel -->
     <div
-      v-else
+      v-if="isOpen"
       class="w-[92vw] max-w-sm h-[32rem] bg-parchment rounded-md shadow-2xl border border-gold/30 flex flex-col overflow-hidden"
       role="dialog"
       aria-label="Chat con José Cecilio del Valle"
@@ -286,5 +301,11 @@ async function send() {
   border-right:4px solid transparent;
   border-top:10px solid #f1e4d0;
   filter: drop-shadow(0 1px 0 rgba(201,162,39,0.25));
+}
+
+@media (max-width: 639px) {
+  .chat-bubble {
+    display: none;
+  }
 }
 </style>

@@ -164,9 +164,9 @@ async function submitForm() {
         </div>
 
         <div class="grid sm:grid-cols-2 gap-10 items-start">
-          <div v-reveal class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
-            <NuxtImg src="/independencia.png" alt="Acta de Independencia" class="w-full object-contain flex-shrink-0" style="max-width:9rem; align-self:flex-start;" />
-            <div>
+          <div v-reveal class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-start text-center sm:text-left transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
+            <NuxtImg src="/acta-portada.png" alt="Acta de Independencia" class="object-contain flex-shrink-0 mx-auto sm:mx-0" style="max-width:6rem; filter:drop-shadow(0 4px 16px rgba(201,162,39,0.4));" />
+            <div class="w-full">
               <h3 class="font-serif text-xl mb-2">Redactor del Acta de Independencia de 1821</h3>
               <p class="text-muted text-sm">
                 El 15 de septiembre de 1821, dio forma con su pluma a la independencia de
@@ -180,9 +180,9 @@ async function submitForm() {
               </a>
             </div>
           </div>
-          <div v-reveal="150" class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
-            <NuxtImg src="/el-amigo-de-patria.png" alt="El Amigo de la Patria" class="w-full object-contain flex-shrink-0" style="max-width:9rem; align-self:flex-start;" />
-            <div>
+          <div v-reveal="150" class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-start text-center sm:text-left transition-all duration-300 hover:-translate-y-1 hover:drop-shadow-lg cursor-default">
+            <NuxtImg src="/el-amigo-de-patria.png" alt="El Amigo de la Patria" class="w-full object-contain flex-shrink-0 mx-auto sm:mx-0" style="max-width:9rem;" />
+            <div class="w-full">
               <h3 class="font-serif text-xl mb-2">El Amigo de la Patria</h3>
               <p class="text-muted text-sm">
                 Fundó y dirigió este periódico en 1820, desde donde difundió ideas ilustradas,
@@ -196,26 +196,27 @@ async function submitForm() {
     </section>
 
 
+
     <!-- CTA CHATBOT -->
-    <section class="pb-4" style="overflow: visible;">
-      <div class="max-w-content mx-auto px-5 sm:px-8" style="position: relative;">
-        <div v-reveal class="text-parchment rounded-sm px-5 sm:px-16 py-10 sm:py-12 flex flex-col sm:flex-row items-center gap-8 sm:gap-10 justify-center text-center sm:text-left" style="background-image: url('/ideas-54.png'); background-size: contain; background-position: center; background-repeat: no-repeat; min-height: 220px; overflow: visible; position: relative; z-index: 1;">
-          <div class="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start" style="position: relative;">
+    <section class="px-5 pb-10 sm:px-0 sm:pb-4" style="overflow: visible;">
+      <div class="max-w-content mx-auto sm:px-8" style="position: relative;">
+        <div v-reveal class="chat-cta text-parchment px-6 py-8 sm:px-16 sm:py-12 flex flex-col sm:flex-row items-center gap-6 sm:gap-10 justify-center text-center sm:text-left">
+          <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start" style="position: relative;">
             <img
               :src="'/jose-cecilio-del-valle.png'"
               alt=""
-              class="profile-cta" style="width: clamp(90px, 18vw, 140px); height: auto; margin-top: -40px; margin-bottom: -10px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); display: block; flex-shrink: 0; object-fit: contain;"
+              class="profile-cta" style="filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));"
             />
-            <div>
+            <div class="w-full sm:w-auto">
               <h3 class="font-serif text-xl text-goldLight">Conversa con El Sabio Valle</h3>
-              <p class="text-parchment/75 text-sm max-w-md">
+              <p class="text-parchment/75 text-sm leading-relaxed max-w-md mx-auto sm:mx-0 mt-2 sm:mt-0">
                 Nuestro asistente virtual responde preguntas sobre su vida, sus ideas y su
                 legado, como si hablaras con él en persona.
               </p>
             </div>
           </div>
           <button
-            class="bg-gold text-ink px-6 py-3 hover:bg-goldLight transition-colors whitespace-nowrap font-semibold tracking-wide" style="border-radius: 10px; border: 1px solid rgb(201,162,39);"
+            class="bg-gold text-ink px-6 py-3 hover:bg-goldLight transition-colors whitespace-nowrap font-semibold tracking-wide w-full max-w-xs sm:w-auto" style="border-radius: 10px; border: 1px solid rgb(201,162,39);"
             @click="openChat"
           >
             Iniciar conversación

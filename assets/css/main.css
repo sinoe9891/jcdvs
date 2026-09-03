@@ -43,6 +43,46 @@ textarea:focus-visible {
   @apply w-16 h-px bg-gold/60 mx-auto my-4;
 }
 
+/* CTA de conversación: tarjeta vertical legible en móvil */
+.chat-cta {
+  min-height: 0;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  border: 2px solid rgba(201, 162, 39, 0.8);
+  border-radius: 14px;
+  background: #10241f;
+  box-shadow: 0 12px 32px rgba(18, 14, 6, 0.22);
+}
+
+.profile-cta {
+  display: block;
+  width: 112px;
+  height: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .chat-cta {
+    min-height: 220px;
+    border: 0;
+    border-radius: 2px;
+    background-color: transparent;
+    background-image: url('/ideas-54.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: none;
+  }
+
+  .profile-cta {
+    width: clamp(90px, 18vw, 140px);
+    margin-top: -40px;
+    margin-bottom: -10px;
+  }
+}
+
 /* ── Scroll reveal ─────────────────────────────────────────────────── */
 .sr-hidden {
   opacity: 0;

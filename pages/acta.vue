@@ -5,7 +5,7 @@ useHead({
     { name: "description", content: "Texto completo del Acta de Independencia de Centroamérica, firmada el 15 de septiembre de 1821 y redactada por José Cecilio del Valle." },
     { property: "og:title", content: "Acta de Independencia de Centroamérica (1821)" },
     { property: "og:description", content: "Lee el documento histórico redactado por El Sabio Valle que proclamó la libertad de Centroamérica." },
-    { property: "og:image", content: "/independencia.png" },
+    { property: "og:image", content: "/acta-portada.png" },
   ],
 });
 
@@ -117,7 +117,7 @@ const articulos = [
 
     <!-- HERO -->
     <section class="relative overflow-hidden pt-16 pb-12 px-5 sm:px-8">
-      <div class="absolute inset-0 pointer-events-none opacity-[0.04]" style="background-image:url('/independencia.png');background-size:55%;background-position:center;background-repeat:no-repeat;"></div>
+      <div class="absolute inset-0 pointer-events-none opacity-[0.04]" style="background-image:url('/acta-portada.png');background-size:55%;background-position:center;background-repeat:no-repeat;"></div>
       <div class="max-w-3xl mx-auto text-center relative z-10">
         <p class="text-goldLight text-[10px] tracking-[0.35em] uppercase mb-4">Documento Histórico · Centroamérica</p>
         <h1 class="font-serif text-4xl sm:text-6xl text-parchment leading-tight mb-4">
@@ -137,15 +137,15 @@ const articulos = [
       </div>
     </section>
 
-    <!-- IMAGEN DEL ACTA -->
-    <section class="pb-16 px-5 sm:px-8">
-      <div class="max-w-5xl mx-auto flex justify-center">
+    <!-- PORTADA DEL ACTA -->
+    <section class="pb-10 px-5 sm:px-8">
+      <div class="flex justify-center">
         <NuxtImg
-          src="/independencia.png"
-          alt="Acta de Independencia de Centroamérica"
-          class="w-full object-contain rounded-sm"
-          style="max-width:360px;filter:drop-shadow(0 16px 48px rgba(201,162,39,0.38)) sepia(0.15);"
-          width="480" height="640"
+          src="/acta-portada.png"
+          alt="Acta de Independencia de Centroamérica — 15 de septiembre de 1821"
+          class="object-contain"
+          width="300" height="380"
+          style="max-width:260px; filter:drop-shadow(0 24px 64px rgba(201,162,39,0.5));"
         />
       </div>
     </section>
